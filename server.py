@@ -1,14 +1,20 @@
-from flask import Flask, render_template
-from flask_socketio import SocketIO, send, join_room, leave_room
-
+from flask import Flask, render_template, request
 app = Flask(__name__)
-app.config['SECRET KEY'] = '123'
-app.debug = True
-socketio = SocketIO(app)
+
+
 
 @app.route('/')
-def index():
-    return render_template("index.html")
+def student():
+   return render_template('student.html')
 
-if __name__ == "__main__":
-    socketio.run(app)
+@app.route('/result',methods = ['POST'])
+def result():
+
+   if request.method == 'POST':
+    
+    result = request.form['Name']
+   
+    return "Name: " + result
+
+if __name__ == '__main__':
+   app.run(debug = True)
